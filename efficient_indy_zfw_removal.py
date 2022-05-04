@@ -49,38 +49,3 @@ for f in payload['data']:
         continue
     else:
         continue
-
-
-
-
-
-
-
-
-# for n in payload:
-#     cid = (payload['data'][x]['id'])
-#     router = (payload['data'][x]['id'])
-#     # print(payload['data'][x]['configuration'][0])
-#     try:
-#         del payload['data'][x]['configuration'][0]['security']
-#         # print('delete')
-#     except KeyError:
-#         print(f'ZFW configuration does not exist on Router: {router}')
-#         x += 1
-#         continue
-#     # print(payload['data'][x]['configuration'][0])
-#     x =+ 1
-#
-    # payload = json.dumps(payload)
-    # # wraps payload with NCM API wrapper
-    # wrapped = '{"configuration": [' + payload + ', []]}'
-    # url = f'https://www.cradlepointecm.com/api/v2/configuration_managers/{cid}/'
-    # # PUT pushing modified configuration to new group
-    # p = requests.put(url, data=wrapped, headers=headers)
-    #
-    # print(f'PUT Status Code:  {p.status_code} \nSuccessfully removed ZFW Options on Router: {router}')
-    # continue
-
-
-
-
