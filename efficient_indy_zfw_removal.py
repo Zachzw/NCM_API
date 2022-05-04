@@ -35,7 +35,7 @@ for f in payload['data']:
             continue
         else:
             try:
-                del g['security']
+                del g['security']['zfw']
             except (NameError, KeyError):
                 print(f'ZFW configuration does not exist on Router: {rid}')
                 continue
