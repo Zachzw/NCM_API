@@ -39,19 +39,19 @@ while True:
     gid = gid['group']
     if state != 'connected':
         print('Router is offline in NCM')
-        time.sleep(5)
+        time.sleep(600)
         continue
     else:
         # conditional to tell the router to alternate between groups
         if gid != group_a:
             put = requests.put(r_url, data=move_to_group_a,  headers=headers)
             print(f'Moved Router to group {group_a} \n Status Code: {put.status_code}')
-            time.sleep(5)
+            time.sleep(600)
             continue
         else:
             put = requests.put(r_url, data=move_to_group_b, headers=headers)
             print(f'Moved Router to group {group_b} \n Status Code: {put.status_code}')
-            time.sleep(5)
+            time.sleep(600)
             continue
 
 
