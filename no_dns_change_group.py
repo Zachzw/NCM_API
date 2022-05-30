@@ -3,7 +3,7 @@ import json
 import os
 import time
 
-# edit these variables to include local ip and local router credentials, router ids, group ids
+# edit these variables to include local ip and local router credentials, router id, group ids
 local_ip = ''
 username = ''
 password = ''
