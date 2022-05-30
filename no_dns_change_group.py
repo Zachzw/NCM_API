@@ -3,17 +3,25 @@ import json
 import os
 import time
 
+# edit these variables to include local ip and local router credentials, router ids, group ids
+local_ip = ''
+username = ''
+password = ''
+group_a_id = ''
+group_b_id = ''
+router_id = ''
+
 # vars for Group URLs, router IDs, and r_url for initial get
 # update group a vars for your environment
-group_a = 'https://www.cradlepointecm.com/api/v2/groups/[Group ID]/'
-move_to_group_a = '{"group" : "https://cradlepointecm.com/api/v2/groups/[Group ID]/"}'
+group_a = f'https://www.cradlepointecm.com/api/v2/groups/{group_a_id}/'
+move_to_group_a = f'{"group" : "https://cradlepointecm.com/api/v2/groups/{group_a_id}/"}'
 
 # update group b vars for your environment
-group_b = 'https://www.cradlepointecm.com/api/v2/groups/[Group ID]/'
-move_to_group_b = '{"group" : "https://cradlepointecm.com/api/v2/groups/[Group ID]/"}'
+group_b = f'https://www.cradlepointecm.com/api/v2/groups/{group_b_id}/'
+move_to_group_b = f'{"group" : "https://cradlepointecm.com/api/v2/groups/{group_b_id}/"}'
 
 # enter router url with router id
-r_url = 'https://www.cradlepointecm.com/api/v2/routers/[Router ID]/'
+r_url = f'https://www.cradlepointecm.com/api/v2/routers/{router_id}/'
 
 # api headers
 headers = {
@@ -24,10 +32,6 @@ headers = {
     'Content-Type': 'application/json'
 }
 
-# edit these variables to include local ip and local router credentials
-local_ip = '192.168.0.1'
-username = 'admin'
-password = 'password1'
 
 # while loop to query local router api, if router is offline in NCM, move it between groups
 while True:
@@ -53,6 +57,3 @@ while True:
             print(f'Moved Router to group {group_b} \n Status Code: {put.status_code}')
             time.sleep(600)
             continue
-
-
-
