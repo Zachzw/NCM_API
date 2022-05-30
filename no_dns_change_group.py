@@ -12,15 +12,15 @@ group_b_id = ''
 router_id = ''
 
 # vars for Group URLs, router IDs, and r_url for initial get
-# update group a vars for your environment
+
 group_a = f'https://www.cradlepointecm.com/api/v2/groups/{group_a_id}/'
 move_to_group_a = f'{"group" : "https://cradlepointecm.com/api/v2/groups/{group_a_id}/"}'
 
-# update group b vars for your environment
+
 group_b = f'https://www.cradlepointecm.com/api/v2/groups/{group_b_id}/'
 move_to_group_b = f'{"group" : "https://cradlepointecm.com/api/v2/groups/{group_b_id}/"}'
 
-# enter router url with router id
+# router url with router id var
 r_url = f'https://www.cradlepointecm.com/api/v2/routers/{router_id}/'
 
 # api headers
