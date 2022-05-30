@@ -12,15 +12,12 @@ group_b_id = ''
 router_id = ''
 
 # vars for Group URLs, router IDs, and r_url for initial get
-
 group_a = f'https://www.cradlepointecm.com/api/v2/groups/{group_a_id}/'
 move_to_group_a = f'{"group" : "https://cradlepointecm.com/api/v2/groups/{group_a_id}/"}'
-
 
 group_b = f'https://www.cradlepointecm.com/api/v2/groups/{group_b_id}/'
 move_to_group_b = f'{"group" : "https://cradlepointecm.com/api/v2/groups/{group_b_id}/"}'
 
-# router url with router id var
 r_url = f'https://www.cradlepointecm.com/api/v2/routers/{router_id}/'
 
 # api headers
