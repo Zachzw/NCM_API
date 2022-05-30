@@ -1,8 +1,29 @@
-import os
 import requests
 import json
+import os
+import time
 
+# edit these variables to include local ip and local router credentials, router ids, group ids
+local_ip = ''
+username = ''
+password = ''
+group_a_id = ''
+group_b_id = ''
+router_id = ''
 
+# vars for Group URLs, router IDs, and r_url for initial get
+# update group a vars for your environment
+group_a = f'https://www.cradlepointecm.com/api/v2/groups/{group_a_id}/'
+move_to_group_a = f'{"group" : "https://cradlepointecm.com/api/v2/groups/{group_a_id}/"}'
+
+# update group b vars for your environment
+group_b = f'https://www.cradlepointecm.com/api/v2/groups/{group_b_id}/'
+move_to_group_b = f'{"group" : "https://cradlepointecm.com/api/v2/groups/{group_b_id}/"}'
+
+# enter router url with router id
+r_url = f'https://www.cradlepointecm.com/api/v2/routers/{router_id}/'
+
+# api headers
 headers = {
     'X-CP-API-ID': os.environ['X-CP-API-ID'],
     'X-CP-API-KEY': os.environ['X-CP-API-KEY'],
@@ -11,41 +32,28 @@ headers = {
     'Content-Type': 'application/json'
 }
 
-# list of router IDs
-router_id = '1404724, 3083917'
 
-# base url var
-base_url = 'https://www.cradlepointecm.com/api/v2/configuration_managers/?router__in='
-# url var combining base url and router_id list
-url = f'{base_url}{router_id}'
-
-
-# get req to grab all config ID's as one call
-r = requests.get(url, headers=headers)
-payload = r.json()
-
-# for loop to iterate through payload, extract router ID, Configuration ID and assign to f
-for f in payload['data']:
-    rid = f['router']
-    cid = f['id']
-    # for loop to grab configuration, delete security object, then push config to router in NCM
-    for g in f['configuration']:
-        l = (len(g))
-        if l <= 0:
-            continue
-        else:
-            try:
-                del g['security']['zfw']
-            except (NameError, KeyError):
-                print(f'ZFW configuration does not exist on Router: {rid}')
-                continue
-        payload = json.dumps(g)
-        # wraps payload with NCM API wrapper
-        wrapped = '{"configuration": [' + payload + ', []]}'
-        url = f'https://www.cradlepointecm.com/api/v2/configuration_managers/{cid}/'
-        # PUT pushing modified configuration to router configuration manager
-        p = requests.put(url, data=wrapped, headers=headers)
-        print(f'PUT Status Code:  {p.status_code} \nSuccessfully removed ZFW Options on Router: {rid}')
+# while loop to query local router api, if router is offline in NCM, move it between groups
+while True:
+    r = requests.get(url=f'http://{local_ip}/api/status/ecm/', auth=(f'{username}', f'{password}'))
+    g = requests.get(r_url, headers=headers)
+    gid = g.json()
+    payload = r.json()
+    state = payload['data']['state']
+    gid = gid['group']
+    if state != 'connected':
+        print('Router is offline in NCM')
+        time.sleep(600)
         continue
     else:
-        continue
+        # conditional to tell the router to alternate between groups
+        if gid != group_a:
+            put = requests.put(r_url, data=move_to_group_a,  headers=headers)
+            print(f'Moved Router to group {group_a} \n Status Code: {put.status_code}')
+            time.sleep(600)
+            continue
+        else:
+            put = requests.put(r_url, data=move_to_group_b, headers=headers)
+            print(f'Moved Router to group {group_b} \n Status Code: {put.status_code}')
+            time.sleep(600)
+            continue
